@@ -1,9 +1,8 @@
 # Business-Questions-Sql-Olist
+
+
+###DADOS ( Banco )
 ---
-
-
-
-## DADOS ( Banco )
 
 Dados em CSV: https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce/data
 
