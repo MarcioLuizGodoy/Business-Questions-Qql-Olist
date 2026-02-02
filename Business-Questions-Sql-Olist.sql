@@ -236,6 +236,8 @@ from orders o inner join order_items oi  on (oi.order_id = o.order_id) inner joi
 where 	op.payment_type = 'boleto'
 limit 10;
 
+			
+
 			--  Left Join
 
 
@@ -265,3 +267,55 @@ select o.order_id as id  , count (distinct oi.product_id ) as quantidade_de_prod
 from orders o left join order_items oi on ( oi.order_id  = o.order_id) 
 group by o.order_id 
 having count (distinct oi.product_id  ) > 5;
+
+
+-- Qual a cardinalidade entre a tabela Pedidos ( orders ) e Avaliações ( reviews ) ?
+
+select o.order_id ,count( orr.review_id )
+from orders o left join order_reviews orr on ( orr.order_id  = o.order_id  )
+group by o.order_id 
+having count( orr.review_id ) > 1 ;
+
+
+
+-- Quantos pedidos (orders) não tem nenhuma avaliação (review) ?
+
+select o.order_id , count (ors.review_id )
+from	orders o left join order_reviews ors on (  ors.order_id = o.order_id  )
+group by o.order_id
+having count (ors.review_id ) < 1; 
+
+SELECT
+o.order_id,
+or2.review_score
+FROM orders o LEFT JOIN order_reviews or2 ON  or2.order_id = o.order_id )
+WHERE or2.order_id IS NULL;
+
+
+
+-- Quais são os top 10 vendedores com mais clientes?
+
+select s.seller_id  , count(c.customer_id )
+from  orders o left join order_items oi on ( oi.order_id  = o.order_id ) left join sellers s on ( s.seller_id = oi.seller_id) left join customer c on ( c.customer_id = o.customer_id) 
+group by s.seller_id 
+order by c.customer_id  desc
+limit 10;
+
+
+
+-- Quantos pedidos (orders) não possuem nenhum produto (products) ?
+
+select count (o.order_id )
+from orders o left join order_items oi on ( oi.order_id = o.order_id ) left join products p on (p.product_id = oi.product_id)
+where  oi.product_id  is null
+
+
+
+
+
+
+
+
+
+
+
